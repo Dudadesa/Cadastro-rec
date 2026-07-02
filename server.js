@@ -12,7 +12,7 @@ const app = express();
 // Lista de origens permitidas para acessar a API
 const listOrigins = [
     "http://localhost:8081", // Expo no computador
-    "http://localhost:8083", // Expo web (porta usada no seu projeto)
+    "http://localhost:8081", // Expo web (porta usada no seu projeto)
     "http://localhost:5501", // Live Server do VS Code
     "http://127.0.0.1:5501", // Variação do Live Server
     "https://Dudadesa.github.io" // Deploy no GitHub Pages
@@ -92,37 +92,7 @@ app.post("/cadastro", async (req, res) => {
     }
 });
 
-// Rota de Login
-app.post("/login", async (req, res) => {
-    try {
-        const { email, senha } = req.body || {};
 
-        if (!email || !senha) {
-            return res.status(400).json({ erro: "Preencha todos os campos" });
-        }
-
-        const sql = `SELECT * FROM tb_usuario WHERE email_usuario = ?`;
-        const [resultado] = await conexao.execute(sql, [email]);
-
-        if (resultado.length === 0) {
-            return res.status(401).json({ mensagem: "Usuário ou senha inválidos!" });
-        }
-
-        const usuario = resultado[0];
-
-        const senhaCorreta = await bcrypt.compare(senha, usuario.snh_usuario);
-
-        if (!senhaCorreta) {
-            return res.status(401).json({ erro: "Senha inválida" });
-        }
-
-        res.json({ mensagem: "Login realizado com sucesso!" });
-
-    } catch (erro) {
-        console.log("Erro no Login: ", erro);
-        res.status(500).json({ erro: "Erro ao cadastrar usuário" });
-    }
-});
 
 // Iniciando o Servidor na porta 3000
 app.listen(3000, () => {

@@ -129,7 +129,7 @@ import {
                   Cadastro
                 </Text>
                 <Text style={styles.textoAuth}>
-                  Crie sua conta para acessar os cursos
+                  Crie sua conta para acessar nossa pagina 
                 </Text>
 
                 <View style={styles.blocoAuth}>
